@@ -78,7 +78,31 @@ async function newIssue(req, res){
 }
 
 
-async function issueEditRender(req, res){
+function issueEditRender(req, res){
+    if (!isNaN(req.params.id)) { ////// solo la primera vez entra y luego vuelve a intentar  ??????
+        sql = "SELECT ISS.id, ISS.nombre, ISS.descripcion, CONCAT(PER.nombre, ' ', PER.apellido) AS responsable, PER.url_img_perfil, REL.tx_issue_relevancia, DATE_FORMAT(vencimiento, '%Y-%m-%d') as vencimiento, EST.tx_issue_estado, personal_id, relevancia_issue_id, estado_issue_id FROM issue as ISS LEFT JOIN personal as PER ON PER.id = ISS.personal_id LEFT JOIN issue_relevancia as REL ON REL.id = ISS.relevancia_issue_id LEFT JOIN issue_estado as EST ON EST.id = ISS.estado_issue_id WHERE ISS.id = '"+req.params.id+"'";
+        conex.query(sql, function(error, result_issue, fields){
+            sql = "select id, CONCAT(nombre, ' ', apellido) AS responsable from personal";
+            conex.query(sql, function(error, result_personal, fields){
+                sql = "select id, tx_issue_relevancia from issue_relevancia";
+                conex.query(sql, function(error, result_relevancia, fields){
+                    sql = "select id, tx_issue_estado from issue_estado";
+                    conex.query(sql, function(error, result_estado, fields){
+                        result_issue = result_issue[0];
+                        res.render('issue/edit-issue', {result_issue, result_personal, result_relevancia, result_estado, layout:'main'});
+                        
+                    });    
+                    
+                });
+            });
+        }); 
+
+    } else {
+        console.log('paso');
+        return;
+    }
+   
+/*
     sql = "SELECT ISS.id, ISS.nombre, ISS.descripcion, CONCAT(PER.nombre, ' ', PER.apellido) AS responsable, PER.url_img_perfil, REL.tx_issue_relevancia, DATE_FORMAT(vencimiento, '%d/%m/%Y') as vencimiento, EST.tx_issue_estado, personal_id, relevancia_issue_id, estado_issue_id FROM issue as ISS LEFT JOIN personal as PER ON PER.id = ISS.personal_id LEFT JOIN issue_relevancia as REL ON REL.id = ISS.relevancia_issue_id LEFT JOIN issue_estado as EST ON EST.id = ISS.estado_issue_id WHERE ISS.id = '"+req.params.id+"'";
     conex.query(sql, function(error, result_issue, fields){
         if (error) {
@@ -109,7 +133,8 @@ async function issueEditRender(req, res){
                 
             });
         });
-    });        
+    }); 
+    */       
 }
   
 /*  

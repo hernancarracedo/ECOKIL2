@@ -62,7 +62,7 @@
                 <label class="col-sm-2 col-form-label">Responsable</label>
                 <div class="col-sm-10">
                   <select name="responsable" class="form-control show-tick">
-                    <option value="">-- seleccione responsable --</option>
+                    <option value="{{result_issue.personal_id}}">{{result_issue.responsable}}</option>
                     
                     {{#each result_personal}}
                     <option value="{{this.id}}">{{this.responsable}}</option>
