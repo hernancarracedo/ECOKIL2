@@ -26,10 +26,9 @@ CREATE TABLE issue_relevancia (
 CREATE TABLE issue_estado (
     id INT NOT NULL auto_increment,
     tx_issue_estado VARCHAR(50) NOT NULL,
+    css VARCHAR(50),
     PRIMARY KEY (id)
 );
-
-
 
 
 

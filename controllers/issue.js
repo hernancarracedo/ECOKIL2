@@ -1,7 +1,7 @@
 let conex = require('../database.js');
 
 async function getIssues(req, res){
-    sql = "SELECT ISS.id, ISS.nombre, ISS.descripcion, CONCAT(PER.nombre, ' ', PER.apellido) AS responsable, PER.url_img_perfil, REL.tx_issue_relevancia, DATE_FORMAT(vencimiento, '%d/%m/%Y') as vencimiento, EST.tx_issue_estado FROM issue as ISS LEFT JOIN personal as PER ON PER.id = ISS.personal_id LEFT JOIN issue_relevancia as REL ON REL.id = ISS.relevancia_issue_id LEFT JOIN issue_estado as EST ON EST.id = ISS.estado_issue_id";
+    sql = "SELECT ISS.id, ISS.nombre, ISS.descripcion, CONCAT(PER.nombre, ' ', PER.apellido) AS responsable, PER.url_img_perfil, REL.tx_issue_relevancia, DATE_FORMAT(vencimiento, '%d/%m/%Y') as vencimiento, EST.tx_issue_estado, EST.css FROM issue as ISS LEFT JOIN personal as PER ON PER.id = ISS.personal_id LEFT JOIN issue_relevancia as REL ON REL.id = ISS.relevancia_issue_id LEFT JOIN issue_estado as EST ON EST.id = ISS.estado_issue_id";
             
     conex.query(sql, function(error, resultado, fields){
         if (error) {
@@ -80,7 +80,7 @@ async function newIssue(req, res){
 
 function issueEditRender(req, res){
     if (!isNaN(req.params.id)) { ////// solo la primera vez entra y luego vuelve a intentar  ??????
-        sql = "SELECT ISS.id, ISS.nombre, ISS.descripcion, CONCAT(PER.nombre, ' ', PER.apellido) AS responsable, PER.url_img_perfil, REL.tx_issue_relevancia, DATE_FORMAT(vencimiento, '%Y-%m-%d') as vencimiento, EST.tx_issue_estado, personal_id, relevancia_issue_id, estado_issue_id FROM issue as ISS LEFT JOIN personal as PER ON PER.id = ISS.personal_id LEFT JOIN issue_relevancia as REL ON REL.id = ISS.relevancia_issue_id LEFT JOIN issue_estado as EST ON EST.id = ISS.estado_issue_id WHERE ISS.id = '"+req.params.id+"'";
+        sql = "SELECT ISS.id, ISS.nombre, ISS.descripcion, CONCAT(PER.nombre, ' ', PER.apellido) AS responsable, PER.url_img_perfil, REL.tx_issue_relevancia, DATE_FORMAT(vencimiento, '%Y-%m-%d') as vencimiento, EST.tx_issue_estado, personal_id, relevancia_issue_id, estado_issue_id, EST.css FROM issue as ISS LEFT JOIN personal as PER ON PER.id = ISS.personal_id LEFT JOIN issue_relevancia as REL ON REL.id = ISS.relevancia_issue_id LEFT JOIN issue_estado as EST ON EST.id = ISS.estado_issue_id WHERE ISS.id = '"+req.params.id+"'";
         conex.query(sql, function(error, result_issue, fields){
             sql = "select id, CONCAT(nombre, ' ', apellido) AS responsable from personal";
             conex.query(sql, function(error, result_personal, fields){
@@ -101,7 +101,8 @@ function issueEditRender(req, res){
         console.log('paso');
         return;
     }
-   
+}
+    
 /*
     sql = "SELECT ISS.id, ISS.nombre, ISS.descripcion, CONCAT(PER.nombre, ' ', PER.apellido) AS responsable, PER.url_img_perfil, REL.tx_issue_relevancia, DATE_FORMAT(vencimiento, '%d/%m/%Y') as vencimiento, EST.tx_issue_estado, personal_id, relevancia_issue_id, estado_issue_id FROM issue as ISS LEFT JOIN personal as PER ON PER.id = ISS.personal_id LEFT JOIN issue_relevancia as REL ON REL.id = ISS.relevancia_issue_id LEFT JOIN issue_estado as EST ON EST.id = ISS.estado_issue_id WHERE ISS.id = '"+req.params.id+"'";
     conex.query(sql, function(error, result_issue, fields){
@@ -135,21 +136,38 @@ function issueEditRender(req, res){
         });
     }); 
     */       
-}
+
   
-/*  
-async function issueEdit(req, res){
-    const { assetId, descripcion, shortName, sizeOD, conexionSuperior, conexionInferior, dateAlta, dateBaja } = req.body;
-    await Asset.findByIdAndUpdate(req.params.id, {assetId, descripcion, shortName, sizeOD, conexionSuperior, conexionInferior, dateAlta, dateBaja});
-    req.flash('success_msg', 'Herramienta Actualizada');
-    res.redirect('/asset');
+
+function issueEdit(req, res){
+    const {nombre, descripcion, relevancia, responsable, vencimiento, estado} = req.body;
+    //const {nombre, descripcion, relevancia, responsable, vencimiento} = req.body;
+    let id = req.params.id;
+    console.log ('id :'+id+'\n');
+    console.log ('nombre :'+nombre+'\n');
+    console.log ('descripcion :'+descripcion+'\n');
+    console.log ('+relevancia :'+relevancia+'\n');
+    console.log ('responsable :'+responsable+'\n');
+    console.log ('vencimiento :'+vencimiento+'\n');
+    console.log ('Estado :'+estado+'\n');
+    
+    sql = "UPDATE issue SET nombre = '"+nombre+"', descripcion = '"+descripcion+"', personal_id = "+responsable+", relevancia_issue_id = "+relevancia+", vencimiento = '"+vencimiento+"', estado_issue_id = "+estado+" WHERE id = "+id;
+    console.log(sql);
+    conex.query(sql, function(error, resultado, fields){
+        if (error) {
+            console.log("Ha ocurrido un error en la consulta", error.message);
+            return res.status(404).send("Ha ocurrido un error en la consulta");
+        }
+        //req.flash('success_msg', 'Tarea Actualizada');
+        res.redirect('/issue');
+    });
 }
-*/
+
 
 module.exports = {
     getIssues,
     issueRender,
     newIssue,
     issueEditRender,
-    //issueEdit
+    issueEdit
 };

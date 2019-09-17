@@ -78,6 +78,20 @@
                 <div class="col-sm-10"> <input type="date" name="vencimiento" class="form-control" value="{{result_issue.vencimiento}}" /></div>
               </div>
 
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Estado</label>
+                <div class="col-sm-10">
+                  <select name="estado" class="form-control show-tick">
+                    <option value="{{result_issue.estado_issue_id}}">{{result_issue.tx_issue_estado}}</option>
+
+                    {{#each result_estado}}
+                    <option value="{{this.id}}">{{this.tx_issue_estado}}</option>
+                    {{/each}}
+                    
+                  </select>
+                </div>
+              </div>              
+
 
             </div>
             <button class="btn btn-primary btn-block" type="submit">Guardar Cambios en Tarea</button>

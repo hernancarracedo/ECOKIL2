@@ -12,6 +12,7 @@ router.get('/issue', issueController.getIssues);
 router.get('/issue/add', issueController.issueRender);
 router.post('/issue/new-issue', issueController.newIssue);
 router.get('/issue/edit/:id', issueController.issueEditRender);
+router.put('/issue/edit-issue/:id', issueController.issueEdit);
 
 /*
 router.get('/servprod/add', isAuthenticated,  servprodController.servprodRender);

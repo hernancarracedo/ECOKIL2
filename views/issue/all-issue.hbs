@@ -47,12 +47,12 @@
                     <tbody>
                     {{#each resultado}}
                     <tr class="gradeX">
-                        <td>{{ this.nombre }}</td>
+                        <td><STRONG>{{ this.nombre }}</STRONG></td>
                         <td>{{ this.descripcion }} </td>
-                        <td class="center"><img alt="{{ this.responsable }}" class="img-circle" style="width: 40px;" src="{{ this.url_img_perfil }}" /> </td>
+                        <td class="center"><img alt="{{ this.responsable }}" class="img-circle" style="width: 50px; margin-left: 15px;" src="{{ this.url_img_perfil }}" /> </td>
                         <td class="center">{{ this.tx_issue_relevancia }} </td>
                         <td class="center">{{ this.vencimiento }} </td>
-                        <td class="center">{{ this.tx_issue_estado }} </td> 
+                        <td class="{{ this.css }}"><strong>{{ this.tx_issue_estado }}</strong></td> 
                         <td class="center">
                             <div class="btn-group">
                                 <a href="/issue/edit/{{this.id}}" class="btn-white btn btn-xs"><i class="fa fa-pencil"></i>&nbsp;Editar</a>
