@@ -1,8 +1,17 @@
-let conex = require('../database.js');
+//let conex = require('../database.js');
+
+var mysql = require('mysql');
+//var bcrypt = require('bcrypt-nodejs');
+var dbconfig = require('../database');
+var conex = mysql.createConnection(dbconfig.connection);
+
+conex.query('USE ' + dbconfig.database);
+
 
 async function getIssues(req, res){
+    console.log ('paso');
     sql = "SELECT ISS.id, ISS.nombre, ISS.descripcion, CONCAT(PER.nombre, ' ', PER.apellido) AS responsable, PER.url_img_perfil, REL.tx_issue_relevancia, DATE_FORMAT(vencimiento, '%d/%m/%Y') as vencimiento, EST.tx_issue_estado, EST.css FROM issue as ISS LEFT JOIN personal as PER ON PER.id = ISS.personal_id LEFT JOIN issue_relevancia as REL ON REL.id = ISS.relevancia_issue_id LEFT JOIN issue_estado as EST ON EST.id = ISS.estado_issue_id";
-            
+    console.log ('paso');        
     conex.query(sql, function(error, resultado, fields){
         if (error) {
             console.log("Ha ocurrido un error en la consulta", error.message);

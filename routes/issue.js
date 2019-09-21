@@ -4,8 +4,8 @@ const router = express.Router();
 // controlador
 const issueController = require('../controllers/issue');
 
-// Helpers
-//const { isAuthenticated } = require('../helpers/auth');
+//Helpers
+const { isAuthenticated } = require('../helpers/auth');
 
 
 router.get('/issue', issueController.getIssues);

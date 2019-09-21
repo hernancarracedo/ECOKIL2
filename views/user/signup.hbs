@@ -1,0 +1,48 @@
+ <div class="signup-box">
+        <div class="logo">
+     
+        
+        </div>
+        <div class="card">
+            <div class="body">
+                <form id="sign_up" action="/user/signup" method="POST" >
+                    <div class="msg">Registro</div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">person</i>
+                        </span>
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="username" placeholder="Name" value="{{username}}" required autofocus>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">email</i>
+                        </span>
+                        <div class="form-line">
+                            <input type="email" class="form-control" name="email" placeholder="Email" value="{{email}}" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">lock</i>
+                        </span>
+                        <div class="form-line">
+                            <input type="password" class="form-control" name="password" minlength="6" placeholder="Password" value="{{password}}" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">lock</i>
+                        </span>
+                        <div class="form-line">
+                            <input type="password" class="form-control" name="confirm_password" minlength="6" placeholder="Confirm Password" value="{{confirm_password}}" required>
+                        </div>
+                    </div>
+ 
+                    <button class="btn btn-block btn-lg bg-pink waves-effect" type="submit">SIGN UP</button>
+ 
+                </form>
+            </div>
+        </div>
+    </div>

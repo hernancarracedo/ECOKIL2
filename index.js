@@ -1,9 +1,20 @@
 const express = require('express');
+const session = require('express-session');
+// cookie parser?
+// body parser?
+// morgan?
+const app = express();
+const passport = require('passport');
+const flash = require('connect-flash');
+
 const exphbs = require('express-handlebars');
 const path = require('path');
 const methodOverride = require('method-override');
 
-const app = express();
+
+
+//require('./config/passport');
+require('./config/passport')(passport); // pass passport for configuration
 
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -17,16 +28,48 @@ app.set('view engine', '.hbs');
 
 
 app.use(express.urlencoded({extended: false}));
+
 app.use(methodOverride('_method'));
 
-// archivos de ruta de cada entidad de la aplicacion
-// ahora solo "usuario" y "issue" por luego se suman las rutas de "cliente", "proveedores", "contactos", etc.
+app.use(session({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(flash());
+
+
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  res.locals.user = req.user || null;
+  next();
+});
+
+
+//app.use(require('./routes'));
 app.use(require('./routes/usuario'));
 app.use(require('./routes/issue'));
+app.use(require('./routes/user'));
 
+/*
+app.use(require('./routes'));
+app.use(require('./routes/users'));
+app.use(require('./routes/cliente'));
+app.use(require('./routes/asset'));
+app.use(require('./routes/assetEstados'));
+app.use(require('./routes/eso'));
+app.use(require('./routes/servprod'));
+app.use(require('./routes/conexion'));
+app.use(require('./routes/tipotrabajo'));
+app.use(require('./routes/ot'));
+*/
 
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 app.listen(app.get('port'), () => {
   console.log('Escuchando en Puerto', app.get('port'));

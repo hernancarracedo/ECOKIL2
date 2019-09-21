@@ -1,3 +1,4 @@
+/*
 var mysql      = require('mysql');
 
 var connection = mysql.createConnection({
@@ -7,6 +8,18 @@ var connection = mysql.createConnection({
   password : '',
   database : 'ecokil'
 });
-
 module.exports = connection;
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
+*/
+// config/database.js
+
+module.exports = {
+  'connection': {
+      'host': 'localhost',
+      'user': 'root',
+      'password': ''
+  },
+'database': 'ecokil',
+  'users_table': 'users'
+};
