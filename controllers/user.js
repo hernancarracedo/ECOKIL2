@@ -5,7 +5,7 @@ conex.query('USE ' + dbconfig.database);
 
 
 function singupRender(req, res){
-  res.render('user/signup', {layout:'layout2'});
+  res.render('user/signup2', {layout:'layout2'});
 }
 
 async function singup(req, res){

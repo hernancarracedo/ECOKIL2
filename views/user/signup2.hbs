@@ -1,0 +1,32 @@
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen   animated fadeInDown">
+        <div>
+            <div>
+
+                <h1 class="logo-name">EKL</h1>
+
+            </div>
+            <h3>Registro a EKL</h3>
+            <p>Alta de usuario para identificacion en sistema</p>
+            <!--<form class="m-t" role="form" action="/user/signup">-->
+            <form id="sign_up" action="/user/signup" method="POST" >
+                <div class="form-group">
+                    <input type="text" name="username" class="form-control" placeholder="Name" required="">
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" class="form-control" placeholder="Email" required="">
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" class="form-control" placeholder="Password" required="">
+                </div>
+                <div class="form-group">
+                    <input type="password" name="confirm_password" class="form-control" placeholder="Confirme Password" required="">
+                </div>
+                <button type="submit" class="btn btn-primary block full-width m-b">Registrar Usuario</button>
+
+                <p class="text-muted text-center"><small>Ya tiene un usuario?</small></p>
+                <a class="btn btn-sm btn-white btn-block" href="/">Login</a>
+            </form>
+        </div>
+    </div>
